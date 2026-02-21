@@ -1,6 +1,9 @@
 
 GUÍA DE CONFIGURACIÓN Y EJECUCIÓN DE SIMULACIONES PPO
 
+PARA EMPEZAR CON LAS SIMULACIONES TOMAR ENCUENTA LA CARPETA LLAMADA PRUEBAS ESTA CARPETA ESTA LISTA CON TODOS LOS ARCHIVOS
+PARA LA SIMULACION. LA CARPETA PRINCIPAL DEL DIA CONTIENE LOS RESULTADOS QUE DEBE MOSTRAR LA SIMULACION.
+
 Esta guía detalla los pasos necesarios para preparar el entorno de trabajo, ajustar las rutas locales en el código fuente y ejecutar las simulaciones de aprendizaje por refuerzo (Sinergym + EnergyPlus) en una terminal de Ubuntu.
 
 Paso 1: Activar el Entorno Virtual 
