@@ -1,0 +1,90 @@
+
+GUÍA DE CONFIGURACIÓN Y EJECUCIÓN DE SIMULACIONES PPO
+
+Esta guía detalla los pasos necesarios para preparar el entorno de trabajo, ajustar las rutas locales en el código fuente y ejecutar las simulaciones de aprendizaje por refuerzo (Sinergym + EnergyPlus) en una terminal de Ubuntu.
+
+Paso 1: Activar el Entorno Virtual 
+
+Antes de ejecutar cualquier script, es obligatorio activar el entorno virtual donde están instalados Sinergym, EnergyPlus, Stable Baselines3 y sus dependencias.
+
+Abre tu terminal en Ubuntu y ejecuta:
+con Python venv (Virtualenv):
+source ~/sinergym312-env/bin/activate (o el nombre que se le haya asignado al entorno)
+
+
+Paso 2: Configurar las Rutas en el Código (Variables Internas)
+
+Abre el archivo del script (por ejemplo, Simulacion_Lunes_15Min.py) en tu editor de código (VS Code, Nano, etc.). Debes modificar estrictamente la sección --- 1. CONFIGURACION GENERAL --- para que las rutas coincidan con la ubicación de los archivos en tu computadora.
+
+Busca y reemplaza las siguientes variables:
+
+ORIGINAL_FILE: Es el modelo base del edificio.
+
+Ejemplo: '/home/tu_usuario/Descargas/EDIFICIO_SOLIDO.epJSON'
+
+FINAL_FILE: Es el archivo temporal que creará el código. Asegúrate de tener permisos de escritura en esa carpeta.
+
+Ejemplo: '/home/tu_usuario/Descargas/EDIFICIO_LUNES_15MIN.epJSON'
+
+EPW_FILE: Es el archivo climático del clima local.
+
+Ejemplo: '/home/tu_usuario/Descargas/Guayaquilcl2023.epw'
+
+CSV_OBJETIVO: Es el archivo con los datos reales medidos que el agente intentará replicar.
+
+Ejemplo: 'LunesVF.csv' (Asegúrate de que este archivo esté en la misma carpeta donde ejecutas el script, o pon la ruta completa).
+
+Paso 3: Ajuste del Día Objetivo (Opcional)
+
+Si vas a reutilizar el código para simular otro día (ej. Martes), busca la parte del código donde se filtra el día de la semana (df_real['Timestamp'].dt.dayofweek == 0) y ajusta el número:
+
+0 = Lunes
+
+1 = Martes
+
+2 = Miércoles
+
+3 = Jueves
+
+4 = Viernes
+
+Paso 4: Ejecutar la Simulación
+
+Una vez guardados los cambios en el código y con el entorno virtual activado, navega en la consola hasta la carpeta donde guardaste tu script de Python usando el comando cd:
+
+
+cd /ruta/hacia/la/carpeta/del/script/
+
+Luego, ejecuta el script llamando a Python:
+
+
+python3 Simulacion_Lunes_15Min.py (segun  la version de python instalada se debe ejecutar preferible python3)
+
+Consideraciones y Tiempos de Ejecución
+
+Tiempo de Entrenamiento (Fase 1): La simulación procesará miles de pasos. Dependiendo de tu procesador (CPU), esto puede tardar entre 30 minutos y un par de horas. Verás en la consola el progreso (FPS, entropía, pérdida, etc.).
+
+No interrumpas la consola: Si parece que la terminal se queda congelada entre la Fase 1 y la Fase 2 durante unos segundos o un par de minutos, no presiones Ctrl+C. El sistema operativo está liberando los puertos de red y escribiendo los modelos en el disco.
+
+Resultados: Al finalizar, el código creará automáticamente:
+
+Una carpeta modelos_lunes_15min/ con el agente PPO entrenado (.zip).
+
+Una carpeta logs_lunes_15min/ para monitoreo en TensorBoard.
+
+El archivo final Resultados_PPO_Lunes_15Min_Final.csv con la comparativa lista para tus gráficas.
+
+Nota: Durante la simulacion puede haber un ligero crasheo es normal es un error controlado, debido a la inestabilidad del simulador ocurre esto
+tarda minutos en recuperarse pero la simulacion continua de forma normal, esto no afecta a los resultados ni al aprendizaje del modelo.
+
+---------------------
+EJECUCION DE LAS GRAFICAS
+-----------------------
+LOS RESULTADOS MOSTRADOS POR LAS SIMULACIONES SE GUARDAN EN LA MISMA CARPETA DONDE ESTE EL ARCHIVO DE SIMULACION,
+PARA CREAR LAS GRAFICAS SOLO DEBE LLAMAR AL ARCHIVO EJEMPLO python3 ComparacionMiercoles.py y este buscara los archivos
+de dataset en la misma carpeta alojada.
+
+---------------------
+EJECUCION DE CALCULOS
+---------------------
+SE DEBE TENER TODOS LOS DATES DE LAS SEMANAS, SEGUN EL CODIGO SI DE 15M O 1H ESTE BUSCARA SU RESPECTIVO ARCHIVO Y MOSTRARA LOS RESULTADOS EN CONSOLA.
