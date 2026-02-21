@@ -1,0 +1,65 @@
+!EplusEnv
+building_file: /home/vboxuser/Descargas/EDIFICIO_LUNES_15MIN_V28.epJSON
+weather_files: /home/vboxuser/Descargas/Guayaquilcl2023.epw
+action_space: !GymSpace
+  class: !Class 'gymnasium.spaces.box.Box'
+  arguments:
+    low: !NumpyArray
+      object:
+      - 22.0
+      - 15.0
+      dtype: numpy:float32
+    high: !NumpyArray
+      object:
+      - 28.0
+      - 21.0
+      dtype: numpy:float32
+    shape: !Tuple
+    - 2
+    dtype: numpy:float32
+time_variables:
+- month
+- day_of_month
+- hour
+variables:
+  t_zone: !Tuple
+  - Zone Mean Air Temperature
+  - PERIMETER_BOT_ZN_1
+  energy_j: !Tuple
+  - Facility Total Purchased Electricity Energy
+  - WHOLE BUILDING
+meters: {}
+actuators:
+  Cooling_Setpoint: !Tuple
+  - Schedule:Compact
+  - Schedule Value
+  - CLGSETP_SCH_PACU_VAV_bot
+  Heating_Setpoint: !Tuple
+  - Schedule:Compact
+  - Schedule Value
+  - HTGSETP_SCH_PACU_VAV_bot
+context: {}
+initial_context: null
+weather_variability: null
+reward: !Class 'sinergym.utils.rewards.LinearReward'
+reward_kwargs:
+  temperature_variables:
+  - t_zone
+  energy_variables:
+  - energy_j
+  range_comfort_winter: &id001 !Tuple
+  - 23.0
+  - 26.0
+  range_comfort_summer: *id001
+max_ep_store: 10
+env_name: eplus-env-v1
+building_config:
+  runperiod: !Tuple
+  - 7
+  - 11
+  - 2021
+  - 31
+  - 8
+  - 2023
+  timesteps_per_hour: 4
+seed: null
