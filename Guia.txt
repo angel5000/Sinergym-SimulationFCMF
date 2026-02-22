@@ -91,3 +91,54 @@ de dataset en la misma carpeta alojada.
 EJECUCION DE CALCULOS
 ---------------------
 SE DEBE TENER TODOS LOS DATES DE LAS SEMANAS, SEGUN EL CODIGO SI DE 15M O 1H ESTE BUSCARA SU RESPECTIVO ARCHIVO Y MOSTRARA LOS RESULTADOS EN CONSOLA.
+
+
+MODIFICACIONES DEL MODELO DEL EDIFICIO
+
+Si alguna vez necesitas abrir el modelo en un editor de texto,
+ en el editor nativo de EnergyPlus (IDF Editor) o en 
+ OpenStudio para hacer los cambios físicos que mencionaste en el 
+ texto de tu tesis, estos son los puntos exactos que debes modificar:
+
+1. Parámetros de Estabilidad (Simulation Control)
+Sección: SimulationControl y Building.
+
+Cambio a realizar: Asegúrate de que las "Máximas iteraciones HVAC" 
+sean 60 (por defecto suelen ser 20) y la tolerancia de temperatura sea 0.5. 
+Si no haces esto, los saltos térmicos que hace el agente PPO crashearán el motor de EnergyPlus.
+
+2. Adaptación Constructiva Local (Aislamiento)
+Sección: Material y Construction.
+
+Cambio a realizar: Como el modelo base (Medium Office ASHRAE) viene 
+con aislamiento térmico para climas con invierno (nieve), debes entrar a las 
+construcciones de los muros exteriores y el techo, y eliminar la capa de material 
+aislante (usualmente llamado Insulation o Fiberglass). Esto adapta la inercia térmica
+ a la realidad de Guayaquil, donde los muros absorben y transmiten más calor.
+
+3. Ajuste de Cargas Internas (Uso Real)
+Sección: Lights (Iluminación) y ElectricEquipment (Equipos).
+
+Cambio a realizar: Reducir la fracción de diseño. 
+El modelo teórico asume que todas las luces y computadoras están encendidas al 100%. 
+Debes ajustar el multiplicador de equipos a un valor entre 0.50 y 0.70 (50-70%) para que la curva de carga 
+base baje y se acerque a tus datos reales de 2023.
+
+4. Apagado de Ascensores y Sistemas Secundarios
+Sección: ElectricEquipment o Exterior:Equipment (dependiendo de cómo se hayan modelado los elevadores).
+
+Cambio a realizar: Si los ascensores o luces exteriores de estacionamiento están modelados, 
+cambia su Schedule Name (Calendario) a un calendario que siempre sea cero, o 
+directamente borra esos objetos. Esto evita sumar un consumo fantasma que tu medidor real no está
+ registrando.
+
+5. Ajuste de Curvas de Eficiencia HVAC (COP)
+Sección: Coil:Cooling:DX:SingleSpeed o el objeto de enfriamiento principal de tu sistema.
+
+Cambio a realizar: Localizar el parámetro Gross Rated Cooling COP y fijarlo en 4.0 
+(como indica tu tesis). Esto le dice a EnergyPlus qué tan eficiente es la máquina real del
+ edificio transformando electricidad en frío.
+
+6. Inyección del Clima y Calendario Local
+Sección: RunPeriod y Schedule:File (o Schedule:Compact).
+
