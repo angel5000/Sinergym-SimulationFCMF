@@ -234,11 +234,11 @@ def main():
             p_val = info.get('power_kw_calibrated', 0.0) # Potencia calibrada
             
             if current_date.weekday() == 0:
-                 data_list.append([current_date.strftime("%Y-%m-%d %H:%M:%S"), t_val, p_val, 0.0, 0])
+                 data_list.append([current_date.strftime("%Y-%m-%d %H:%M:%S"), t_val, p_val, 0.0])
             current_date += timedelta(hours=1)
     except: pass
 
-    df = pd.DataFrame(data_list, columns=['Timestamp', 'T_Zone_PPO', 'Power_kW_PPO', 'Reward', 'Es_Feriado'])
+    df = pd.DataFrame(data_list, columns=['Timestamp', 'T_Zone_PPO', 'Power_kW_PPO', 'Reward'])
     df.to_csv('Resultados_PPO_Lunes_1H_Final.csv', index=False)
     print("Resultados guardados: Resultados_PPO_Lunes_1H_Final.csv")
 

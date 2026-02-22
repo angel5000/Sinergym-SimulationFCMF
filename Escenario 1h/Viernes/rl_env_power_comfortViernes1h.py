@@ -417,8 +417,7 @@ def main():
                      current_date.strftime("%Y-%m-%d %H:%M:%S"), 
                      t_val, 
                      p_val, 
-                     actual_reward, 
-                     0  # Indicador de feriado (0=dia normal, 1=feriado)
+                     actual_reward
                  ])
             
             # Avanzar una hora
@@ -436,7 +435,7 @@ def main():
     # Crear DataFrame y exportar a CSV
     df = pd.DataFrame(
         data_list, 
-        columns=['Timestamp', 'T_Zone_PPO', 'Power_kW_PPO', 'Reward', 'Es_Feriado']
+        columns=['Timestamp', 'T_Zone_PPO', 'Power_kW_PPO', 'Reward']
     )
     df.to_csv('Resultados_PPO_Viernes_1H_Final.csv', index=False)
     

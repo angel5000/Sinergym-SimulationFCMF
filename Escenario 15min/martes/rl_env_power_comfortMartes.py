@@ -264,7 +264,7 @@ def main():
             if current_date.weekday() == 1:
                  data_list.append([
                      current_date.strftime("%Y-%m-%d %H:%M:%S"), 
-                     t_val, p_val, reward_val, 0
+                     t_val, p_val, reward_val
                  ])
             
             current_date += timedelta(minutes=15)
@@ -272,7 +272,7 @@ def main():
     except Exception as e:
         print(f"Error Loop: {e}")
 
-    df = pd.DataFrame(data_list, columns=['Timestamp', 'T_Zone_PPO', 'Power_kW_PPO', 'Reward', 'Es_Feriado'])
+    df = pd.DataFrame(data_list, columns=['Timestamp', 'T_Zone_PPO', 'Power_kW_PPO', 'Reward'])
     df.to_csv('Resultados_PPO_Martes_15Min_Final.csv', index=False)
     
     print("\n" + "="*80)
