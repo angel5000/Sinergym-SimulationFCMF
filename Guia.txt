@@ -97,8 +97,7 @@ MODIFICACIONES DEL MODELO DEL EDIFICIO
 
 Si alguna vez necesitas abrir el modelo en un editor de texto,
  en el editor nativo de EnergyPlus (IDF Editor) o en 
- OpenStudio para hacer los cambios físicos que mencionaste en el 
- texto de tu tesis, estos son los puntos exactos que debes modificar:
+ OpenStudio para hacer los cambios físicos 
 
 1. Parámetros de Estabilidad (Simulation Control)
 Sección: SimulationControl y Building.
