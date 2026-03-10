@@ -110,8 +110,8 @@ plt.xticks(range(0, 25, 2))
 plt.grid(True, alpha=0.3)
 plt.legend(loc='upper right', shadow=True, fontsize=12)
 plt.tight_layout()
-    plt.savefig('validacion_modelo_perfil_diario_miercoles_1h.png', dpi=300)
-    print("Gráfica 1 lista.")
+plt.savefig('validacion_modelo_perfil_diario_miercoles_1h.png', dpi=300)
+print("Gráfica 1 lista.")
 plt.close()
 
 # ==========================================
@@ -148,8 +148,8 @@ for i, year in enumerate(years):
 
 plt.xlabel('Hora del Día', fontsize=14, fontweight='bold')
 plt.tight_layout()
-    plt.savefig('validacion_modelo_por_anio_miercoles_1h.png', dpi=300)
-    print("Gráfica 2 lista.")
+plt.savefig('validacion_modelo_por_anio_miercoles_1h.png', dpi=300)
+print("Gráfica 2 lista.")
 plt.close()
 
 # ==========================================
@@ -190,8 +190,8 @@ plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=2))
 plt.gcf().autofmt_xdate()
 
 plt.tight_layout()
-    plt.savefig('validacion_modelo_serie_temporal_miercoles_1h.png', dpi=300)
-    print("Gráfica 3 lista.")
+plt.savefig('validacion_modelo_serie_temporal_miercoles_1h.png', dpi=300)
+print("Gráfica 3 lista.")
 plt.close()
 
 print("\n¡TODO LISTO! Gráficas de Miércoles generadas con tablas de error.")
